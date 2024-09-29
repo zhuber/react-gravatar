@@ -14,6 +14,7 @@ class Gravatar extends React.Component {
     default: PropTypes.string,
     className: PropTypes.string,
     protocol: PropTypes.string,
+    domain: PropTypes.string,
     style: PropTypes.object,
     fallback: PropTypes.object,
   }
@@ -22,6 +23,7 @@ class Gravatar extends React.Component {
     rating: 'g',
     default: 'retro',
     protocol: '//',
+    domain: 'www.gravatar.com',
   }
 
   constructor(props, context) {
@@ -42,7 +44,7 @@ class Gravatar extends React.Component {
       // Fall back to another default component if the image results in a 404
       return this.props.fallback
     } else {
-      const base = `${this.props.protocol}www.gravatar.com/avatar/`
+      const base = `${this.props.protocol}${this.props.domain}/avatar/`
 
       const query = querystring.stringify({
         s: this.props.size,
@@ -114,7 +116,7 @@ class Gravatar extends React.Component {
       }
       return (
         <img
-          alt={`Gravatar for ${formattedEmail}`}
+          alt={this.props.email ? `Gravatar for ${formattedEmail}` : `Gravatar`}
           style={this.props.style}
           src={src}
           srcSet={`${retinaSrc} 2x`}
